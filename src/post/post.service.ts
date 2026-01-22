@@ -13,7 +13,8 @@ export class PostService{
     }
     
     findOne(id: number){
-        return `this action search one post ${id}`
+        return `this action search one post teste
+         ${id}`
     }
 
     update(id: number, updatePostDto: UpdatePostDto){
