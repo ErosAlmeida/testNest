@@ -3,3 +3,15 @@ GET http://localhost:3000
 ###
 
 POST http://localhost:3000/auth/login
+
+@baseUrl = http://localhost:3000
+
+### AppControllerGetHello
+
+# @name AppControllerGetHello
+GET {{baseUrl}}/home/hello
+
+### ExemploDeRota
+
+# @name ExemploDeRota
+GET {{baseUrl}}/home/exemplo/
