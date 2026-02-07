@@ -9,8 +9,7 @@ export class AppService{
         return 'Exemplo usa o service';
     }
 
-    testandoMonstro(){
-        return 'yummi'
-    }
+   
+
 
 }
