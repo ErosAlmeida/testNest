@@ -25,3 +25,10 @@ GET {{baseUrl}}/recados/1/
 ###
 
 POST {{baseUrl}}/recados/
+
+Content-Type: application/json
+
+{
+    "recado" : "this is the message i am setting",
+    "nova-chave" : "outro valor"
+}
