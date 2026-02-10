@@ -21,3 +21,13 @@ GET {{baseUrl}}/home/exemplo/
 GET {{baseUrl}}/recados/
 ###
 GET {{baseUrl}}/recados/1/
+
+
+#CARROS
+###
+
+GET {{baseUrl}}/carros/
+
+###
+GET {{baseUrl}}/carros/1/
+
