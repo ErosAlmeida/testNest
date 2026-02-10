@@ -1,8 +1,9 @@
 import { Controller, Module } from "@nestjs/common";
+import { RecadosController } from "src/recados/recados.controller";
 
 
 @Module({
-    imports: [],
+    imports: [RecadosController],
     controllers: [],
     providers:[]
 })
