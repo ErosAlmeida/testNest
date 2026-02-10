@@ -22,12 +22,6 @@ GET {{baseUrl}}/recados/
 ###
 GET {{baseUrl}}/recados/1/
 
-
-#CARROS
 ###
 
-GET {{baseUrl}}/carros/
-
-###
-GET {{baseUrl}}/carros/1/
-
+POST {{baseUrl}}/recados/
