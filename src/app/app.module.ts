@@ -1,11 +1,10 @@
-import { Controller, Module } from "@nestjs/common";
-import { RecadosController } from "src/recados/recados.controller";
+import { Module } from '@nestjs/common';
+import { RecadosController } from 'src/recados/recados.controller';
 
 
 @Module({
-    imports: [RecadosController],
-    controllers: [],
-    providers:[]
+  imports: [],
+  controllers: [RecadosController],
+  providers: [],
 })
-
-export class AppModule{};
+export class AppModule {}

@@ -1,16 +1,18 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 
 @Controller('recados')
 export class RecadosController{
     // Encontra todos os recados
     // /recados/
+    @Get()
     findAll(){
-        return 'todos os recados'
+        return 'all message'
     }
 
     // Encontra um recado
     // /recados/:id/
+    @Get(":id")
     findOne(){
-        return 'um recado'
+        return 'this root return one message'
     }
 }

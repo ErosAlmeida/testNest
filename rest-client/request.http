@@ -15,3 +15,9 @@ GET {{baseUrl}}/home/hello
 
 # @name ExemploDeRota
 GET {{baseUrl}}/home/exemplo/
+
+# RECADOS
+###
+GET {{baseUrl}}/recados/
+###
+GET {{baseUrl}}/recados/1/
