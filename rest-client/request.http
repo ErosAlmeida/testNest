@@ -33,6 +33,7 @@ Content-Type: application/json
     "nova-chave" : "outro valor"
 }
 
+###
 PATCH  {{baseUrl}}/recados/1/
 
 Content-Type: application/json
@@ -41,3 +42,7 @@ Content-Type: application/json
     "recado" : "this is the message i am setting",
     "nova-chave" : "outro valor"
 }
+
+###
+
+DELETE {{baseUrl}}/recados/1/
