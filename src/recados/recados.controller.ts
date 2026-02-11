@@ -36,7 +36,7 @@ export class RecadosController{
         }
     }
     @Delete(":id")
-    delete(@Param('id') id:string){
+    remove(@Param('id') id:string){
         return `essa rota apaga a mensagem ${id}`
     }
 }
