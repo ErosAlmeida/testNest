@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from "@nestjs/common";
 
 @Controller('recados')
 export class RecadosController{
@@ -13,8 +13,10 @@ export class RecadosController{
 // PUT é utilizado para atualizar um recurso inteiro
     @HttpCode(HttpStatus.OK)
     @Get()
-    findAll(){
-        return 'all message'
+
+    findAll(@Query() pagination: any){
+       const{limit = 10, offset = 0} = pagination;
+       return `Teste do query. Limit${limit}, offset=${offset}`
     }
 
     

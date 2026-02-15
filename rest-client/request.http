@@ -20,6 +20,12 @@ GET {{baseUrl}}/home/exemplo/
 ###
 GET {{baseUrl}}/recados/
 ###
+
+GET {{baseUrl}}/recados/
+?limit= 10
+&offset=10
+&user=Nice
+###
 GET {{baseUrl}}/recados/1/
 
 ###

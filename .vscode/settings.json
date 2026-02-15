@@ -1,0 +1,10 @@
+{
+  "editor.fontSize": 14,
+  "terminal.integrated.fontSize": 14,
+  "editor.minimap.enabled": true,
+  "editor.wordWrap": "off",
+  "editor.renderWhitespace": "none",
+  "editor.formatOnSave": false,
+  "explorer.compactFolders": true,
+  "workbench.startupEditor": "welcomePage"
+}
