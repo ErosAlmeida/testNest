@@ -21,7 +21,7 @@ export class RecadosController{
        const{limit = 10, offset = 0} = pagination;
        
 
-       return this.recadosService.hell0()
+       return this.recadosService.hello()
     }
 
     

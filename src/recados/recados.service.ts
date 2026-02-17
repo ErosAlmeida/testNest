@@ -2,7 +2,9 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class RecadosService{
-    hell0(){
-        return 'do service'
-    }
+   private lastId = 1;
+
+   hello(){
+    return 'teste'
+   }
 }
