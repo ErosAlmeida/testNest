@@ -1,7 +1,10 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from "@nestjs/common";
+import { RecadosService } from "./recados.service";
 
 @Controller('recados')
 export class RecadosController{
+
+    constructor(private readonly recadosService: RecadosService){}
     // CRUD
 // Create -> POST -> Criar um recado
 // Read -> GET -> Ler todos os recados
@@ -16,7 +19,9 @@ export class RecadosController{
 
     findAll(@Query() pagination: any){
        const{limit = 10, offset = 0} = pagination;
-       return `Teste do query. Limit${limit}, offset=${offset}`
+       
+
+       return this.recadosService.hell0()
     }
 
     
