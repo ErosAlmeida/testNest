@@ -19,31 +19,26 @@ export class RecadosController{
 
     findAll(@Query() pagination: any){
        const{limit = 10, offset = 0} = pagination;
-       
-
-       return this.recadosService.hello()
+      return this.recadosService.findAll();
     }
 
     
     @Get(":id")
     findOne(@Param('id') id :string){
-        return `this root return this id ${id}`
+        return this.recadosService.findOne(id)
     }
 
     @Post()
     create(@Body() body : any){
-        return body ;
+       return this.recadosService.create(body)
     }
 
     @Patch(":id")
-    update(@Param('id') id: string, @Body() Body : any){
-        return{
-            id,
-            ...Body
-        }
+    update(@Param('id') id: string, @Body() body : any){
+      return this.recadosService.update(id, body);
     }
     @Delete(":id")
     remove(@Param('id') id:string){
-        return `essa rota apaga a mensagem ${id}`
+        return this.recadosService.remove(id);
     }
 }
