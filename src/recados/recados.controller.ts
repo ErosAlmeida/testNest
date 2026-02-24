@@ -5,7 +5,6 @@ import { RecadosService } from "./recados.service";
 export class RecadosController{
 
     constructor(private readonly recadosService: RecadosService){}
-    // CRUD
 // Create -> POST -> Criar um recado
 // Read -> GET -> Ler todos os recados
 // Read -> GET -> Ler apenas um recado
