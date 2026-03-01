@@ -3,9 +3,8 @@ import { RecadosController } from "./recados.controller";
 import { RecadosService } from "./recados.service";
 
 @Module({
-    imports: [RecadosController],
-    providers:[RecadosService],
-    exports: [],
+    controllers: [RecadosController],
+  providers: [RecadosService],
 
 })
 
