@@ -26,8 +26,8 @@ export class RecadosService{
     return this.recados;
   }
 
-  findOne(id: string) {
-    const recado =  this.recados.find(item => item.id === +id);//metodo padrao JS/ converte string pra numero
+  findOne(id: number) {
+    const recado =  this.recados.find(item => item.id === id);//metodo padrao JS/ converte string pra numero
     if(recado) return recado;
 
     this.throwNotFoundError;
@@ -69,10 +69,8 @@ export class RecadosService{
     }
   }
 
-  remove(id: string) {
-    const recadoExistenteIndex = this.recados.findIndex(
-      item => item.id === +id,
-    );
+   remove(id: number) {
+    const recadoExistenteIndex = this.recados.findIndex(item => item.id === id);
 
     if (recadoExistenteIndex < 0) {
       this.throwNotFoundError();

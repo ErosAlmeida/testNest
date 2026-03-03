@@ -5,6 +5,6 @@ import { IsBoolean, IsOptional } from "class-validator";
 export class UpdateRecadoDto extends PartialType(CreateRecadoDto){
     @IsBoolean()
     @IsOptional()
-    readonly lido? :string;
+    readonly lido? :boolean;
  
 }
