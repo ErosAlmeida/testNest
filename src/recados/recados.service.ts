@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Recado } from "./entities/recados.entity";
+import { CreateRecadoDto } from "./dto/create-recado.dto";
+import { UpdateRecadoDto } from "./dto/update-recado.dto";
 
 @Injectable()
 export class RecadosService{
@@ -25,26 +27,30 @@ export class RecadosService{
   }
 
   findOne(id: string) {
-    const recado =  this.recados.find(item => item.id === +id);
+    const recado =  this.recados.find(item => item.id === +id);//metodo padrao JS/ converte string pra numero
     if(recado) return recado;
 
     this.throwNotFoundError;
   }
 
-  create(body: any) {
-    this.lastId++;
-    const id = this.lastId;
+  create(createRecadoDto: CreateRecadoDto) {
+   this.lastId++;
+
+   const id = this.lastId;
     const novoRecado = {
       id,
-      ...body,
+      ...createRecadoDto,
+      lido: false,
+      data: new Date(),
     };
-    this.recados.push(novoRecado);
+    this.recados.push(novoRecado)
 
     return novoRecado;
   }
+  
 
-  update(id: string, body: any) {
-    const recadoExistenteIndex = this.recados.findIndex(
+  update(id: string, updateRecadoDto: UpdateRecadoDto) {
+    const recadoExistenteIndex = this.recados.findIndex(// indice do objeto
       item => item.id === +id,
     );
     if (recadoExistenteIndex < 0) {
@@ -56,7 +62,7 @@ export class RecadosService{
 
     this.recados[recadoExistenteIndex] = {
       ...recadoExistente,
-      ...body,
+      ...updateRecadoDto,
     };
 
     return this.recados[recadoExistenteIndex];
@@ -73,9 +79,10 @@ export class RecadosService{
     }
 
 
-    const recado = this.recados[recadoExistenteIndex]
+     const recado = this.recados[recadoExistenteIndex];
 
-    this.recados.splice(recadoExistenteIndex, 1)
+    this.recados.splice(recadoExistenteIndex, 1);
+
     return recado;
   }
 }
