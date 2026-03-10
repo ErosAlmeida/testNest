@@ -12,17 +12,7 @@ export class RecadosService{
     private readonly recadoRepository: Repository<Recado>,
   ) {}
 
-  private lastId = 1;
-  private recados: Recado[] = [
-    {
-      id: 1,
-      texto: 'Este é um recado de teste',
-      de: 'Joana',
-      para: 'João',
-      lido: false,
-      data: new Date(),
-    },
-  ];
+
 
  throwNotFoundError() {
     throw new NotFoundException('Recado não encontrado');
@@ -45,54 +35,43 @@ export class RecadosService{
     this.throwNotFoundError;
   }
 
-  create(createRecadoDto: CreateRecadoDto) {
-   this.lastId++;
-
-   const id = this.lastId;
+ async create(createRecadoDto: CreateRecadoDto) {
+  
     const novoRecado = {
-      id,
       ...createRecadoDto,
       lido: false,
       data: new Date(),
     };
-    this.recados.push(novoRecado)
-
-    return novoRecado;
+    const recado = await this.recadoRepository.create(novoRecado);
+    return this.recadoRepository.save(recado);
   }
   
 
-  update(id: string, updateRecadoDto: UpdateRecadoDto) {
-    const recadoExistenteIndex = this.recados.findIndex(// indice do objeto
-      item => item.id === +id,
-    );
-    if (recadoExistenteIndex < 0) {
-      this.throwNotFoundError();
-    }
+  async update(id: number, updateRecadoDto: UpdateRecadoDto) {
+   const partialUpdateRecadoDto = {
+    lido: updateRecadoDto?.lido,
+    texto: updateRecadoDto?.texto,
+   };
+   const recado = await this.recadoRepository.preload({
+    id,
+    ...partialUpdateRecadoDto
+   });
 
-    if (recadoExistenteIndex < 0) {
-       const recadoExistente = this.recados[recadoExistenteIndex];
+   if(!recado) return this.throwNotFoundError();
 
-    this.recados[recadoExistenteIndex] = {
-      ...recadoExistente,
-      ...updateRecadoDto,
-    };
+   await this.recadoRepository.save(recado);
 
-    return this.recados[recadoExistenteIndex];
-    }
+   return recado;
+  
   }
 
-   remove(id: number) {
-    const recadoExistenteIndex = this.recados.findIndex(item => item.id === id);
+   async remove(id: number) {
+    
+    const recado = await this.recadoRepository.findOneBy({
+      id,
+    })
+    if(!recado ) return this.throwNotFoundError();
 
-    if (recadoExistenteIndex < 0) {
-      this.throwNotFoundError();
-    }
-
-
-     const recado = this.recados[recadoExistenteIndex];
-
-    this.recados.splice(recadoExistenteIndex, 1);
-
-    return recado;
+    return this.recadoRepository.remove(recado);
   }
 }
