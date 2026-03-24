@@ -27,7 +27,22 @@ GET {{baseUrl}}/recados/
 &user=Nice
 ###
 # 
+# Pessoas
+### Lista todas as pessoas
+GET {{baseUrl}}/pessoas/
+?limit=10
+&offset=0
+### Lista apenas uma pessoa
+GET {{baseUrl}}/pessoas/3/
+### Cria uma pessoa
+POST {{baseUrl}}/pessoas/
+Content-Type: application/json
 
+{
+    "email": "email1@email.com",
+    "password": "123456",
+    "nome": "Yummi"
+}
 
 # Pessoas
 ### Lista todas as pessoas

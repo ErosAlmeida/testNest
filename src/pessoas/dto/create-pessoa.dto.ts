@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 
 export class CreatePessoaDto {
-  @IsEmail()
+   @IsEmail()
   email: string;
 
   @IsString()
