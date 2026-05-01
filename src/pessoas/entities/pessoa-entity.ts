@@ -10,7 +10,7 @@ import {
 @Entity()
 export class Pessoa {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number = 0;
 
   @Column({ unique: true })
   @IsEmail()
@@ -20,7 +20,7 @@ export class Pessoa {
   passwordHash!: string;
 
   @Column({ length: 100 })
-  nome!: string;
+  nome: string = 'test';
 
   @CreateDateColumn()
   createdAt?: Date;

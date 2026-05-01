@@ -6,8 +6,8 @@ import { Pessoa } from "./entities/pessoa-entity";
 import { Repository } from "typeorm";
 
 @Injectable()
-export class PessoasService{
-   constructor(
+export class PessoasService {
+  constructor(
     @InjectRepository(Pessoa)
     private readonly pessoaRepository: Repository<Pessoa>,
   ) {}
@@ -24,16 +24,26 @@ export class PessoasService{
       await this.pessoaRepository.save(novaPessoa);
       return novaPessoa;
     } catch (error) {
-      if (error.code === '23505') {
-        throw new ConflictException('E-mail já está cadastrado.');
-      }
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    (error as any).code === '23505'
+  ) {
+    throw new ConflictException('E-mail já está cadastrado.');
+  }
 
-      throw error;
-      }
-    }
+  throw error;
+}
+  }
+    async findAll(){
+      const pessoa = await this.pessoaRepository.find({
+        order:{
+          id: 'desc',
+        }
+      })
 
-    findAll(){
-        return 'this action return all people'
+      return pessoa;
     }
 
     findOne(id: number){
