@@ -1,3 +1,4 @@
+
 import {
   IsEmail,
   IsNotEmpty,
@@ -7,17 +8,17 @@ import {
 } from 'class-validator';
 
 export class CreatePessoaDto {
-   @IsEmail()
-  email: string;
+  @IsEmail()
+  email!: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
-  password: string;
+  password!: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(100)
-  nome: string;
+  nome!: string;
 }

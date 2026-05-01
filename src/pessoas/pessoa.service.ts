@@ -29,7 +29,7 @@ export class PessoasService{
       }
 
       throw error;
-    }
+      }
     }
 
     findAll(){
