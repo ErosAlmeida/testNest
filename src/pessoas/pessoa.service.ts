@@ -1,9 +1,10 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { CreatePessoaDto } from "./dto/create-pessoa.dto";
 import { UpdateRecadoDto } from "src/recados/dto/update-recado.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Pessoa } from "./entities/pessoa-entity";
 import { Repository } from "typeorm";
+import { NotFoundError } from "rxjs";
 
 @Injectable()
 export class PessoasService {
@@ -46,16 +47,22 @@ export class PessoasService {
       return pessoa;
     }
 
-    findOne(id: number){
-        return `this action return the number ${id}`
+    async findOne(id: number){
+       const pessoa = this.pessoaRepository.findOneBy({
+        id,
+       });
+       if(!pessoa){
+        throw new NotFoundException('Pessoa não encontrada')
+       }
     }
 
-    update(id: number, updateRecadoDto : UpdateRecadoDto){
+   async update(id: number, updateRecadoDto : UpdateRecadoDto){
         return `this action updated the id ${id}`
     }
 
-    delete(id: number){
-        return `this action dele the id ${id}`
+    async remove(id: number){
+        const pessoa = this.pessoaRepository.remove(id);
+        return this.pessoaRepository.remove(pessoa);
     }
 
 }
