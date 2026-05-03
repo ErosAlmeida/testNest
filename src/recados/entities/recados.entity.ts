@@ -3,16 +3,11 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 @Entity()
 export class Recado {
   @PrimaryGeneratedColumn()
-  id: number;
+  id : number;
 
   @Column({type: 'varchar', length: 255})
   texto: string;
   
-  @Column({type: 'varchar', length: 50})
-  de: string;
-
-  @Column({type: 'varchar', length: 50})
-  para: string;
 
   @Column({default: false})
   lido: boolean;

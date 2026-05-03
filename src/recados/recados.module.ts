@@ -6,7 +6,7 @@ import { Recado } from './entities/recados.entity';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Recado])],
+  imports: [TypeOrmModule.forFeature([Recado]), PessoasModule],
   controllers: [RecadosController],
   providers: [RecadosService],
 })

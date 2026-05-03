@@ -3,8 +3,10 @@ import { CreatePessoaDto } from "./dto/create-pessoa.dto";
 import { UpdateRecadoDto } from "src/recados/dto/update-recado.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Pessoa } from "./entities/pessoa-entity";
-import { Repository } from "typeorm";
+import { Repository, UpdateDateColumn } from "typeorm";
 import { NotFoundError } from "rxjs";
+import { updatePessoaDto } from "./dto/update-pessoa.dto";
+
 
 @Injectable()
 export class PessoasService {
@@ -57,7 +59,21 @@ export class PessoasService {
     }
 
    async update(id: number, updateRecadoDto : UpdateRecadoDto){
-        return `this action updated the id ${id}`
+        const dadosPessoa = {
+      nome: updatePessoaDto?.nome,
+      passwordHash: updatePessoaDto?.password,
+    };
+
+    const pessoa = await this.pessoaRepository.preload({
+      id,
+      ...dadosPessoa,
+    });
+
+    if (!pessoa) {
+      throw new NotFoundException('Pessoa não encontrada');
+    }
+
+    return this.pessoaRepository.save(pessoa);
     }
 
     async remove(id: number){
