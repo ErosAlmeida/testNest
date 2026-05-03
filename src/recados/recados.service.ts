@@ -5,6 +5,7 @@ import { UpdateRecadoDto } from "./dto/update-recado.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PessoasService } from "src/pessoas/pessoa.service";
+import { PaginationDto } from "src/common/dto/pagination.dto";
 
 @Injectable()
 export class RecadosService{
@@ -20,8 +21,25 @@ export class RecadosService{
     throw new NotFoundException('Recado não encontrado');
   }
   
-  async findAll() {
-    const recados = await this.recadoRepository.find()
+   async findAll(paginationDto?: PaginationDto) {
+    const { limit = 10, offset = 0 } = paginationDto;
+       take: limit, // quantos registros serão exibidos (por página)
+      skip: offset, // quantos registros devem ser pulados
+      // relations: ['de', 'para'
+      order:{
+        id: 'desc',
+      },
+      select:{
+        de:{
+          id: true,
+          nome: true,
+        },
+        para:{
+          id: true,
+          nome:true,
+        }
+      }
+    })
   }
 
   async findOne(id: number) {
@@ -30,6 +48,21 @@ export class RecadosService{
     where:{
       id,
     },
+
+      relations: ['de', 'para'],
+      order: {
+        id: 'desc',
+      },
+      select: {
+        de: {
+          id: true,
+          nome: true,
+        },
+        para: {
+          id: true,
+          nome: true,
+        },
+      },
    })
    
    if(recado) return recado;
@@ -38,31 +71,40 @@ export class RecadosService{
   }
 
  async create(createRecadoDto: CreateRecadoDto) {
+     const { deId, paraId } = createRecadoDto;
     // Encontrar a pessoa que está criando o recado
+    const de = await this.pessoasService.findOne(deId)
     // Encontrar a pessoa para quem o recado está sendo enviado
-
+  const para = await this.pessoasService.findOne(paraId) 
   
     const novoRecado = {
-      ...createRecadoDto,
+      texto: createRecadoDto.texto,
+      de,
+      para,
       lido: false,
       data: new Date(),
     };
     const recado = await this.recadoRepository.create(novoRecado);
-    return this.recadoRepository.save(recado);
+    await this.recadoRepository.save(recado);
+
+    return {
+      ...recado,
+      de: {
+        id: recado.de.id,
+      },
+      para: {
+        id: recado.para.id,
+      },
+    };
+
   }
   
 
   async update(id: number, updateRecadoDto: UpdateRecadoDto) {
-   const partialUpdateRecadoDto = {
-    lido: updateRecadoDto?.lido,
-    texto: updateRecadoDto?.texto,
-   };
-   const recado = await this.recadoRepository.preload({
-    id,
-    ...partialUpdateRecadoDto
-   });
+   const recado = await this.findOne(id)
 
-   if(!recado) return this.throwNotFoundError();
+    recado?.texto = updateRecadoDto?.texto ?? recado.texto;
+    recado.lido = updateRecadoDto?.lido ?? recado.lido;
 
    await this.recadoRepository.save(recado);
 
