@@ -22,6 +22,7 @@ export class RecadosService{
   }
   
    async findAll(paginationDto?: PaginationDto) {
+       console.log('RecadosService findAll executado');
     const { limit = 10, offset = 0 } = paginationDto;
        take: limit, // quantos registros serão exibidos (por página)
       skip: offset, // quantos registros devem ser pulados
