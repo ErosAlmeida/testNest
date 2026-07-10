@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RecadosService } from './recados.service';
 import { RecadosController } from './recados.controller';
 import { Recado } from './entities/recados.entity';
+import { PessoasModule } from 'src/pessoas/pessoa.module';
 
 
 @Module({

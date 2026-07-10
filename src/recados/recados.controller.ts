@@ -25,7 +25,7 @@ export class RecadosController{
    async findAll(@Query() pagination: PaginationDto){       
     console.log('recadosController FindAll executando')
     const{limit = 10, offset = 0} = pagination;
-      const recados = await this.recadosService.findAll(paginationDto);
+      const recados = await this.recadosService.findAll(pagination);
       return recados;
     }
 
