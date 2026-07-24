@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   ParseIntPipe,
   Patch,
@@ -12,9 +13,17 @@ import { PessoasService } from "./pessoa.service";
 import { CreatePessoaDto } from "./dto/create-pessoa.dto";
 
 import { UpdatePessoaDto } from "./dto/update-pessoa.dto";
+import { REMOVE_SPACES_REGEX } from "src/common/constants/server-name.constant";
+import { LetterLower } from "src/common/regex/letterLower";
 @Controller("pessoas")
 export class PessoasController {
-  constructor(private readonly pessoasService: PessoasService) {}
+  onlyLowercaseLettersRegex: any;
+  constructor(private readonly pessoasService: PessoasService) {
+ 
+ // @Inject(REMOVE_SPACES_REGEX)
+  //private readonly onlyLowercaseLettersRegex: LetterLower
+  
+  }
 
   @Post()
   create(@Body() createPessoaDto: CreatePessoaDto) {
@@ -24,6 +33,7 @@ export class PessoasController {
   @Get()
   findAll() {
     return this.pessoasService.findAll();
+    console.log(this.onlyLowercaseLettersRegex.execute("TESTE"));
   }
 
   @Get(":id")
