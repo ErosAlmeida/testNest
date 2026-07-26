@@ -5,7 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SimpleMiddleware } from 'src/common/middlewares/simple.middleware';
 import { OutroMiddleware } from 'src/common/middlewares/outro.middleware';
-
+  // envFilePath: ['env/.env'],
+      // ignoreEnvFile: true,
 
 @Module({
   imports: [TypeOrmModule.forRoot({
