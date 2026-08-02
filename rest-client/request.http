@@ -2,6 +2,21 @@ GET http://localhost:3000
 
 ###
 
+
+# 
+
+
+
+# AUTH
+### Lista todas as pessoas
+POST {{baseUrl}}/auth/
+Content-Type: application/json
+
+{
+    "email": "teste@email.com",
+    "password": "123456"
+}
+
 POST http://localhost:3000/auth/login
 
 @baseUrl = http://localhost:3000
