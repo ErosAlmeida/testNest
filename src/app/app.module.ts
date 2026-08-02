@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SimpleMiddleware } from 'src/common/middlewares/simple.middleware';
 import { OutroMiddleware } from 'src/common/middlewares/outro.middleware';
+import { AuthModule } from 'src/auth/auth.module';
   // envFilePath: ['env/.env'],
       // ignoreEnvFile: true,
 
@@ -19,7 +20,8 @@ import { OutroMiddleware } from 'src/common/middlewares/outro.middleware';
     autoLoadEntities: true, //carrega entidades sem precisar especifica-las
     synchronize: true, // sincroniza com o BD. Não deve ser usado em produção
   }),
-    RecadosModule
+    RecadosModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

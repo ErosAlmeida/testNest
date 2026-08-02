@@ -13,7 +13,6 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
      "target": "ES2023",
-     "ignoreDeprecations": "6.0",
     "sourceMap": true,
     "baseUrl": "./",
     "incremental": true,

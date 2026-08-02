@@ -9,6 +9,7 @@ import { Repository } from "typeorm";
 import { Pessoa } from "./entities/pessoa-entity";
 import { CreatePessoaDto } from "./dto/create-pessoa.dto";
 import { UpdatePessoaDto } from "./dto/update-pessoa.dto";
+import { HashingService } from "src/hashing/hashing.service";
 
 @Injectable()
 export class PessoasService {
@@ -18,13 +19,17 @@ export class PessoasService {
   constructor(
     @InjectRepository(Pessoa)
     private readonly pessoaRepository: Repository<Pessoa>,
+    private readonly hashingService: HashingService
   ) {}
 
   async create(createPessoaDto: CreatePessoaDto) {
     try {
+
+      const passwordHash = await this.hashingService.hash(createPessoaDto.password);
+
       const dadosPessoa = {
         nome: createPessoaDto.nome,
-        passwordHash: createPessoaDto.password,
+        passwordHash,
         email: createPessoaDto.email,
       };
 
@@ -69,11 +74,19 @@ export class PessoasService {
 
   async update(id: number, updatePessoaDto: UpdatePessoaDto) {
     const pessoa = await this.findOne(id);
-
+  const dadosPessoa = {
+      nome: updatePessoaDto?.nome,
+     
+    };
     pessoa.nome = updatePessoaDto.nome ?? pessoa.nome;
 
-    if (updatePessoaDto.password) {
-      pessoa.passwordHash = updatePessoaDto.password;
+    if (updatePessoaDto?.password) {
+
+      const passwordHash = await this.hashingService.hash(
+        updatePessoaDto.password
+      );
+
+      dadosPessoa['passwordHash'] = passwordHash;
     }
 
     return await this.pessoaRepository.save(pessoa);
