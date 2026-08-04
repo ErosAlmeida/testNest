@@ -25,14 +25,13 @@ export class AuthService{
     const passwordIsValid = await this.hashingService.compare(
       loginDto.password,
       pessoa.passwordHash,
-      
     );
 
     if (!passwordIsValid) {
       throw new UnauthorizedException('Senha inválida!');
     }
 
-    // A gente vai fazer o novo token e vamos entregar para o usuário na
+    // novo token e entregar para o usuário na
     // resposta.
 
     return {
