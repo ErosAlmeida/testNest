@@ -19,7 +19,7 @@ export class Pessoa {
   email: string | undefined;
 
   @Column({ length: 255 })
-  passwordHash: string | undefined;
+  passwordHash!: string;
 
   @Column({ length: 100 })
   nome: string | undefined;

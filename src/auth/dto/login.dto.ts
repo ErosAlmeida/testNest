@@ -3,11 +3,11 @@ import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 export class LoginDto {
 
     @IsEmail()
-    email: string | undefined;
+    email!: string;
 
      @IsString()
     @IsNotEmpty()
-    password: string | undefined;
+    password!: string;
 
 }
 
