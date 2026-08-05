@@ -6,6 +6,7 @@ import { HashingService } from "src/hashing/hashing.service";
 import { Pessoa } from "src/pessoas/entities/pessoa-entity";
 import jwtConfig from "./config/jwt.config";
 import type { ConfigType } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService{
@@ -16,9 +17,8 @@ export class AuthService{
 
    @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
-  ) {
-    console.log(jwtConfiguration);
-  }
+  private readonly jwtService: JwtService,
+  ) {}
 
   async login(loginDto: LoginDto) {
     
