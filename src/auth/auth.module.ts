@@ -14,7 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
 
  imports: [
     TypeOrmModule.forFeature([Pessoa]),
-    ConfigModule.forFeature(jwtConfig),
+    ConfigModule.forFeature(jwtConfig),//variaveis de ambiente
     JwtModule.registerAsync(jwtConfig.asProvider())
   ],
     controllers: [AuthController],
