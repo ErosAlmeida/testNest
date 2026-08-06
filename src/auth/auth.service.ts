@@ -37,24 +37,9 @@ export class AuthService{
     );
 
     if (!passwordIsValid) {
-      throw new UnauthorizedException('Senha inválida!');
+      throw new UnauthorizedException('Senha inválida.');
     }
-
-       const accessToken = await this.signJwtAsync<Partial<Pessoa>>(
-      pessoa.id,
-      this.jwtConfiguration.jwtTtl,
-      { email: pessoa.email },
-    );
-
-    const refreshToken = await this.signJwtAsync(
-      pessoa.id,
-      this.jwtConfiguration.jwtRefreshTtl,
-    );
-
-    return {
-      accessToken,
-      refreshToken,
-    };
+  
   }
 
   private async signJwtAsync<T>(sub: number, expiresIn: number, payload?: T) {
