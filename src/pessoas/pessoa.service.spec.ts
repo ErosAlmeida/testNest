@@ -1,32 +1,41 @@
-import test, { beforeEach, describe, it } from "node:test";
+import { beforeEach, describe, it } from "node:test"
 
-describe('PessoasService 111 ', () => {
+import { PessoasService } from "./pessoa.service";
+import { HashingService } from "src/hashing/hashing.service";
+import { Pessoa } from "./entities/pessoa-entity";
+import { getRepositoryToken } from "@nestjs/typeorm";
+import { Test, TestingModule } from '@nestjs/testing';
+import { Repository } from "typeorm";
+
+describe('PessoaService', () => {
+  let pessoaService: PessoasService;
+  let pessoaRepository: Repository<Pessoa>;
+  let hashingService: HashingService;
+
   beforeEach(async () => {
-    // console.log('Isso será executado antes de cada teste');
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        PessoasService,
+        {
+          provide: getRepositoryToken(Pessoa),
+          useValue: {},
+        },
+        {
+          provide: HashingService,
+          useValue: {},
+        },
+      ],
+    }).compile();
+
+    pessoaService = module.get<PessoasService>(PessoasService)
+    pessoaRepository = module.get<Repository<Pessoa>>(
+        getRepositoryToken(Pessoa)
+    )
+    hashingService = module.get<HashingService>(HashingService)
+
   });
-
-  // Caso - Teste
-  it('deve somar o numero1 e o numero2 e resultar em 3', () => {
-    // Configurar - Arrange
-    //Fazer alguma ação - Act
-    // Conferir se essa ação foi a esperada - Assert
-    const numero1 = 1;
-    const numero2 = 2;
-
-    // Fazer alguma ação - Act
-    const result = numero1 + numero2;
-
-    // Conferir se essa ação foi a esperada - Assert
-    // === 3 = toBe
-    expect(result).toBe(3);
+    it('pessoaService deve estar definido', () => {
+    expect(pessoaService).toBeDefined();
   });
+  
 });
-
-describe('PessoaController', () => {
-    test('deve somar o numero1 e o numero2 e resultar em 3', () => {})
-    it('testando alguma coisa', () => {})
-})
-
-function expect(result: number): { toBe: (arg0: number) => void; } {
-    throw new Error("Function not implemented.");
-}
