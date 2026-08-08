@@ -39,7 +39,7 @@ describe('PessoaService', () => {
   });
     describe('create', () => {
     it('deve criar uma nova pessoa', () => {
-      // CreatePessoaDto
+      // CreatePessoa
       // Que o hashing service tenha o método hash
       // Saber se o hashing service foi chamado com CreatePessoaDto
       // Saber se o pessoaRepository.create foi chamado com dados pessoa
