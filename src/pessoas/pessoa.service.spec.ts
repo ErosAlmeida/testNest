@@ -6,6 +6,7 @@ import { Pessoa } from "./entities/pessoa-entity";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from "typeorm";
+import { CreatePessoaDto } from "./dto/create-pessoa.dto";
 
 describe('PessoaService', () => {
   let pessoaService: PessoasService;
@@ -38,19 +39,36 @@ describe('PessoaService', () => {
     expect(pessoaService).toBeDefined();
   });
     describe('create', () => {
-    it('deve criar uma nova pessoa', () => {
-      // CreatePessoa
+    it('deve criar uma nova pessoa', async () => {
+      // Arange
+      // CreatePessoaDto
+      const createPessoaDto: CreatePessoaDto = {
+        email: 'yummi@email.com',
+        nome: 'yummi',
+        password: '123456',
+      };
+      const passwordHash = 'HASHDESENHA';
+
       // Que o hashing service tenha o método hash
       // Saber se o hashing service foi chamado com CreatePessoaDto
       // Saber se o pessoaRepository.create foi chamado com dados pessoa
       // Saber se pessoaRepository.save foi chamado com a pessoa criada
       // O retorno final deve ser a nova pessoa criada -> expect
+
+      jest.spyOn(hashingService, 'hash').mockResolvedValue(passwordHash);
+
+      // Act
+      await pessoaService.create(createPessoaDto);
+
+      // Assert
+      expect(hashingService.hash).toHaveBeenCalledWith(
+        createPessoaDto.password,
+      );
+      expect(pessoaRepository.create).toHaveBeenCalledWith({
+        nome: createPessoaDto.nome,
+        passwordHash: 'HASHDESENHA',
+        email: createPessoaDto.email,
+      });
     });
-
-
-    //describe
-    //beforeEach
-    //it
-    //expect
   });
 });
