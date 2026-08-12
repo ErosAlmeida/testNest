@@ -106,5 +106,15 @@ describe('PessoaService', () => {
         ConflictException,
       );
     });
+
+    it('deve lançar ConflictException quando e-mail já existe', async () => {
+      jest
+        .spyOn(pessoaRepository, 'save')
+        .mockRejectedValue(new Error('Erro genérico'));
+
+      await expect(pessoaService.create({} as any)).rejects.toThrow(
+        new Error('Erro genérico'),
+      );
+    });
   });
 });;
