@@ -6,6 +6,7 @@ import { Pessoa } from './entities/pessoa-entity';
 import { HashingService } from 'src/hashing/hashing.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { IsEmail } from 'class-validator';
+import { ConflictException } from '@nestjs/common';
 
 describe('PessoasService', () => {
   let pessoaService: PessoasService;
@@ -42,6 +43,7 @@ describe('PessoasService', () => {
       describe('create', () => {
     it('deve criar uma nova pessoa', async () => {
       // CreatePessoaDto
+      //Arrange
       const createPessoaDto: CreatePessoaDto = {
         email: 'luiz@email.com',
         nome: 'Luiz',
@@ -88,6 +90,15 @@ describe('PessoasService', () => {
       // pessoa criada?
       expect(result).toEqual(novaPessoa)
     });
+
+    it('deve lançar um conflictException', async () => {
+      jest.spyOn(pessoaRepository, 'save').mockRejectedValue({
+        code: '20505',
+      });
+      await expect (pessoaService.create({} as any)).rejects.toThrow(
+        ConflictException,
+      )
+    })
   });
   });
 });
