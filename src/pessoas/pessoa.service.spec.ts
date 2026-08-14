@@ -48,26 +48,41 @@ describe('PessoasService', () => {
         password: '123456',
       };
       const passwordHash = 'HASHDESENHA';
+      const novaPessoa = {
+        id: 1,
+        nome: createPessoaDto.nome,
+        email: createPessoaDto.email,
+        passwordHash,
+      }
       // Que o hashing service tenha o método hash
       // Saber se o hashing service foi chamado com CreatePessoaDto
       // Saber se o pessoaRepository.create foi chamado com dados pessoa
       // Saber se pessoaRepository.save foi chamado com a pessoa criada
       // O retorno final deve ser a nova pessoa criada -> expect
 
+      //como o valor retornado por hashingService é necessario
+      //vamos simular esse valor
       jest.spyOn(hashingService, 'hash').mockResolvedValue(passwordHash);
 
       //act
-      await pessoaService.create(createPessoaDto)
+      const result = await pessoaService.create(createPessoaDto)
 
       //Assert
+     // O método hashingService.hash foi chamado com createPessoaDto.password?
       expect(hashingService.hash).toHaveBeenCalledWith(createPessoaDto.password)
       
-
+      // o metodo pessoaRepository.create foi chamado com os dados da nova pessoa
+      //com o has de senha gerado por hashingService.hash
       expect(pessoaRepository.create).toHaveBeenLastCalledWith({
       nome: createPessoaDto.nome,
       email: createPessoaDto.email,
-      password: createPessoaDto.password
+      passwordHash,
       })
+
+      expect(pessoaRepository.save).toHaveBeenCalledWith(novaPessoa)
+
+
+      expect(result).toEqual(novaPessoa)
     });
   });
   });
