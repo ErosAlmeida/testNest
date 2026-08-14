@@ -15,11 +15,16 @@ describe('PessoasService', () => {
         PessoasService,
         {
           provide: getRepositoryToken(Pessoa),
-          useValue: {},
+            useValue: {
+            save: jest.fn(),
+            create: jest.fn(),
+          },
         },
         {
           provide: HashingService,
-          useValue: {},
+          useValue: {
+            hash: jest.fn(),
+          },
         },
       ],
     }).compile();
