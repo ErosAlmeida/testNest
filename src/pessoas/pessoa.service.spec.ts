@@ -79,9 +79,13 @@ describe('PessoasService', () => {
       passwordHash,
       })
 
+       // O método pessoaRepository.save foi chamado com os dados da nova
+      // pessoa gerada por pessoaRepository.create?
       expect(pessoaRepository.save).toHaveBeenCalledWith(novaPessoa)
 
 
+      // O resultado do método pessoaService.create retornou a nova
+      // pessoa criada?
       expect(result).toEqual(novaPessoa)
     });
   });
