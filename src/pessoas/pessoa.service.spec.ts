@@ -99,6 +99,13 @@ describe('PessoasService', () => {
         ConflictException,
       )
     })
+    it('deve lançar ConflitException quando o email ja exite', async () => {
+      jest.spyOn(pessoaRepository, 'save').mockRejectedValue(new Error('Erro generico'))
+
+      await expect(pessoaService.create({} as any)).rejects.toThrow(
+        new Error('erro generico')
+      )
+    })
   });
   });
 });
