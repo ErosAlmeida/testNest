@@ -107,26 +107,28 @@ describe('PessoasService', () => {
       )
     })
 
-    describe("findeOne" ,() => {
-      it('deve retornar a pessoa encontrada', async () => {
-        const pessoaId = 1;
-        const pessoaEncontrada = {
-          id: pessoaId,
-          nome: 'yummi',
-          email: 'yummi@gmail.com',
-          passwordHash: '12345'
-        };
-        jest.spyOn(pessoaRepository, 'findOneBy').mockRejectedValue(pessoaEncontrada as any);
+     describe('findOne', () => {
+    it('deve retornar uma pessoa se a pessoa for encontrada', async () => {
+      const pessoaId = 1;
+      const pessoaEncontrada = {
+        id: pessoaId,
+        nome: 'yummi',
+        email: 'yummi@email.com',
+        passwordHash: '123456',
+      };
 
-        const result = await pessoaService.findOne(pessoaId)
+      jest
+        .spyOn(pessoaRepository, 'findOneBy')
+        .mockResolvedValue(pessoaEncontrada as any);
 
-        expect(result).toEqual(pessoaEncontrada)
+      const result = await pessoaService.findOne(pessoaId);
 
-        it("deve retornar a pessoa encontrada", async () => {
-          await expect(pessoaService.findOne(1)).rejects.toThrow(NotFoundException)
-        })
-      })
-    })
-  });
+      expect(result).toEqual(pessoaEncontrada);
+    });
+    it('deve retornar uma pessoa se a pessoa for encontrada', async () => {
+      await expect(pessoaService.findOne(1)).rejects.toThrow(NotFoundException);
+        });
+      });
+    });
   });
 });
