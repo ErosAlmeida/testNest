@@ -6,7 +6,7 @@ import { Pessoa } from './entities/pessoa-entity';
 import { HashingService } from 'src/hashing/hashing.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { IsEmail } from 'class-validator';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 
 describe('PessoasService', () => {
   let pessoaService: PessoasService;
@@ -105,6 +105,27 @@ describe('PessoasService', () => {
       await expect(pessoaService.create({} as any)).rejects.toThrow(
         new Error('erro generico')
       )
+    })
+
+    describe("findeOne" ,() => {
+      it('deve retornar a pessoa encontrada', async () => {
+        const pessoaId = 1;
+        const pessoaEncontrada = {
+          id: pessoaId,
+          nome: 'yummi',
+          email: 'yummi@gmail.com',
+          passwordHash: '12345'
+        };
+        jest.spyOn(pessoaRepository, 'findOneBy').mockRejectedValue(pessoaEncontrada as any);
+
+        const result = await pessoaService.findOne(pessoaId)
+
+        expect(result).toEqual(pessoaEncontrada)
+
+        it("deve retornar a pessoa encontrada", async () => {
+          await expect(pessoaService.findOne(1)).rejects.toThrow(NotFoundException)
+        })
+      })
     })
   });
   });
