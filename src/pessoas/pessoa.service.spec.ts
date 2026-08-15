@@ -129,6 +129,29 @@ describe('PessoasService', () => {
       await expect(pessoaService.findOne(1)).rejects.toThrow(NotFoundException);
         });
       });
+      describe('findAll', () => {
+        it('deve retornar todos os usuarios', async () => {
+          const pessoaMock: Pessoa[] = [
+            {
+              id: 1,
+              nome: 'yummi',
+              email: 'yummi@email.com',
+              passwordHash:'12345'
+            } as Pessoa,
+          ];
+
+          jest.spyOn(pessoaRepository, 'find').mockRejectedValue(pessoaMock)
+
+          const result = await pessoaService.findAll();
+
+          expect(result).toEqual(pessoaMock)//Espero que result seja igual a pessoaMock.
+          expect(pessoaRepository.find).toHaveBeenCalledWith({
+            order:{
+              id:'desc',
+            }
+          })
+        })
+      })
     });
   });
 });
