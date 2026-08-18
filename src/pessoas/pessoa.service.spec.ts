@@ -151,7 +151,16 @@ describe('PessoasService', () => {
             }
           })
         })
+
       })
     });
+      it('deve lançar um erro se a pessoa não for encontrada', async () => {
+      await expect(pessoaService.findOne(1)).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+  
+    
+
   });
 });
