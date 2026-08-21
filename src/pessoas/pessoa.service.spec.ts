@@ -158,9 +158,10 @@ describe('PessoasService', () => {
       await expect(pessoaService.findOne(1)).rejects.toThrow(
         NotFoundException,
       );
+     
+    it('deve retornar uma pessoa se a pessoa for encontrada', async () => {
+      await expect(pessoaService.findOne(1)).rejects.toThrow(NotFoundException);
+      });
     });
-  
-    
-
   });
 });
